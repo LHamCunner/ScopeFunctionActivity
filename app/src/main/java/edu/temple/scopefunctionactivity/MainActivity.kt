@@ -12,8 +12,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Log.d("getTestDataArray", getTestDataArray().toString())
-        Log.d("averageLessThanMedian", averageLessThanMedian(getTestDataArray()).toString())
 
         // You can test your helper functions by  calling them from onCreate() and
         // printing their output to the Log, which is visible in the LogCat:
@@ -40,20 +38,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Create a view from an item in a collection, but recycle if possible (similar to an AdapterView's adapter)
-    private fun getView(position: Int, recycledView: View?, collection: List<Int>, context: Context): View {
-        val textView: TextView
-
-        if (recycledView != null) {
-            textView = recycledView as TextView
-        } else {
-            textView = TextView(context)
-            textView.setPadding(5, 10, 10, 0)
-            textView.textSize = 22f
+    private fun getView(position: Int, recycledView: View?, collection: List<Int>, context: Context): View =
+        (if (recycledView != null) recycledView as TextView else TextView(context).apply {
+            setPadding(5, 10, 10, 0)
+            textSize = 22f
+        }).apply {
+            text = collection[position].toString()
         }
-
-        textView.text = collection[position].toString()
-
-        return textView
-    }
 
 }
